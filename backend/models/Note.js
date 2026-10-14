@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-//creating schema for note
-
 const noteSchema = mongoose.Schema({
     title: {
         type: String,
@@ -11,10 +9,22 @@ const noteSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-
-},{timestamps: true})
-
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
+    // Groups this note is shared with
+    sharedWithGroups: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group',
+    }],
+    // Allow individual sharing too
+    sharedWithUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+}, { timestamps: true });
 
 const Note = mongoose.model('Note', noteSchema);
-
 export default Note;

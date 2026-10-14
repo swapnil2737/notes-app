@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { dbConnect } from './config/database.js';
 import notesRoutes from './routes/notesRoutes.js';
+import authRoutes from './routes/authRoutes.js';
+import groupRoutes from './routes/groupRoutes.js';
 
 dotenv.config();
 
@@ -44,7 +46,9 @@ app.get("/", (req, res) => {
 });
 
 // Routes
+app.use("/api/auth", authRoutes);
 app.use("/api/notes", notesRoutes);
+app.use("/api/groups", groupRoutes);
 
 // Database connectivity & start server
 dbConnect().then(() => {
@@ -52,5 +56,3 @@ dbConnect().then(() => {
         console.log(`Server started on port ${port}`);
     });
 });
-
-
